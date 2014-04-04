@@ -1,4 +1,0 @@
-waterworks
-==========
-
-Message agregation server.
