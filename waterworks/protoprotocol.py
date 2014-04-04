@@ -19,6 +19,7 @@ from protoconfig import ProtoConfig
 from protomessage import ProtoMessage
 
 
+
 class ProtocolFeatures(object):
     """
     Class outlining the features a protocol may or may not support.
