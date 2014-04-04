@@ -16,5 +16,16 @@
 
 
 
+class WaterWorks(object):
+    def __init__(self):
+        pass
+
+    def get_plugins(self):
+        plugin_classes = []
+        for plugin in plugin_classes:
+            # do something
+            pass
+
+
 def start_daemon(*args):
-    print "Hello world lawl."
+    client = WaterWorks()
