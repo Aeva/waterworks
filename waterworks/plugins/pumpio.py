@@ -13,9 +13,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Waterworks.  If not, see <http://www.gnu.org/licenses/>.
 
-import pypump
 
+import pypump
 from waterworks.protoprotocol import ProtoProtocol
+
+
 
 class PumpProtocol(ProtoProtocol):
     """ Protocol for interacting with the pump.io service """
@@ -25,7 +27,7 @@ class PumpProtocol(ProtoProtocol):
             self.client = pypump.Client(
                 webfinger=config["webfigner"],
                 type="native",
-                name="Waterwork",
+                name="Waterworks",
                 key=storage["client"].get("key"),
                 secret=storage["client"].get("secret")
             )
@@ -35,13 +37,16 @@ class PumpProtocol(ProtoProtocol):
                 type="native",
                 name="Waterworks"
             )
+        self.pump = None
 
+    def connect(self):
         self.pump = pypump.PyPump(
             client=self.client,
-            verifier_callback=self.verifier_callback
+            verifier_callback=self.__verifier_callback
         )
 
-    def verifier_callback(self, url):
+    def __verifier_callback(self, url):
+        
         print url
         verifier = raw_input("Verifier: ").strip(" ")
         return verifier
