@@ -1,4 +1,5 @@
 import json
+import os
 
 class StoreException(Exception):
     pass
@@ -34,10 +35,21 @@ class Store(dict):
         fout.close()
 
     @classmethod
-    def load(cls, filename):
+    def get_filename(cls):
+        raise NotImplemented()
+
+    @classmethod
+    def load(cls, filename=None):
         """ Load JSON from disk into store object """
-        data = open(filename).read()
-        data = json.loads(data)
-        store = cls(data)
+        if filename is None:
+            filename = cls.get_filename()
+
+        if os.path.isfile(filename):
+            data = open(filename).read()
+            data = json.loads(data)
+            store = cls(data)
+        else:
+            store = cls()
+
         store.filename = filename
         return store
