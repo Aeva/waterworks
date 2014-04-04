@@ -16,6 +16,7 @@
 
 
 import pypump
+
 from waterworks.protoprotocol import ProtoProtocol
 
 
@@ -23,31 +24,35 @@ from waterworks.protoprotocol import ProtoProtocol
 class PumpProtocol(ProtoProtocol):
     """ Protocol for interacting with the pump.io service """
 
+    pump = None
+
     def __init__(self, config, storage):
+        self.storage = storage
+        self.config = config
+
+    def connect(self):
         if "client" in storage:
             self.client = pypump.Client(
-                webfinger=config["webfigner"],
+                webfinger=self.config["webfigner"],
                 type="native",
                 name="Waterworks",
-                key=storage["client"].get("key"),
-                secret=storage["client"].get("secret")
+                key=self.storage["client"].get("key"),
+                secret=self.storage["client"].get("secret")
             )
         else:
             self.client = pypump.Client(
-                webfinger=config["webfinger"],
+                webfinger=self.config["webfinger"],
                 type="native",
                 name="Waterworks"
             )
-        self.pump = None
 
-    def connect(self):
         self.pump = pypump.PyPump(
             client=self.client,
             verifier_callback=self.__verifier_callback
         )
 
     def __verifier_callback(self, url):
-        
+
         print url
         verifier = raw_input("Verifier: ").strip(" ")
         return verifier
