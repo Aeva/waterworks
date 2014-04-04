@@ -16,5 +16,9 @@
 
 
 
-def start_daemon(*args):
-    print "Hello world lawl."
+class ProtoMessage(object):
+    """
+    Base class for messages for protocols to use.
+    """
+    
+    pass

@@ -15,6 +15,10 @@
 # along with Waterworks.  If not, see <http://www.gnu.org/licenses/>.
 
 
+from protoconfig import ProtoConfig
+from protomessage import ProtoMessage
+
+
 
 class ProtoProtocol(object):
     """
@@ -27,7 +31,7 @@ class ProtoProtocol(object):
     CONFIG_CLASS = None
     
 
-    def __init__(self):
+    def __init__(self, storage):
         raise NotImplementedError()
 
     def get_features(self):

@@ -16,5 +16,9 @@
 
 
 
-def start_daemon(*args):
-    print "Hello world lawl."
+class ProtoConfig(object):
+    """
+    Base class for protocol specific config settings.
+    """
+
+    pass
