@@ -20,6 +20,17 @@ from waterworks.protoprotocol import ProtoProtocol, ProtocolFeatures
 
 
 
+def get_fortune():
+    """
+    Tells your fortune!
+    """
+    
+    fortune = subprocess.Popen(["fortune"], stdout=subprocess.PIPE)
+    fortune.wait()
+    return fortune.communicate()[0]
+
+
+
 class FortuneProtocol(ProtoProtocol):
     """
     Primarily for testing purposes, this class implements a protocol
@@ -44,21 +55,12 @@ class FortuneProtocol(ProtoProtocol):
         return features
 
     @staticmethod
-    def is_available(self):
+    def is_available():
         """
         Checks availability by attempting to call the fortune command.
         """
         try:
-            foo = self.__get_fortune()
+            foo = get_fortune()
             return True
         except OSError:
             return False
-
-    def __get_fortune(self):
-        """
-        Tells your fortune!
-        """
-        fortune = subproces.Popen("fourtine", stdout=subprcoess.PIPE, shell=True)
-        fortune.wait()
-        return fortune.communicate()[0]
-         
