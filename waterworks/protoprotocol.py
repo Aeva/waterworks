@@ -22,6 +22,11 @@ class ProtoProtocol(object):
     inherit from.
     """
 
+    UPDATE_DELAY = 0 # in miliseconds
+    MESSAGE_CLASS = None
+    CONFIG_CLASS = None
+    
+
     def __init__(self):
         raise NotImplementedError()
 
