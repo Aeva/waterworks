@@ -14,12 +14,46 @@
 # You should have received a copy of the GNU General Public License
 # along with Waterworks.  If not, see <http://www.gnu.org/licenses/>.
 
+from subprocess import check_output
+from waterworks.protoprotocol import ProtoProtocol, ProtocolFeatures
 
 
-class FortuneProtocol(object):
+
+class FortuneProtocol(ProtoProtocol):
     """
     Primarily for testing purposes, this class implements a protocol
     for an endless stream of fortunes.
     """
 
     UPDATE_DELAY = 10
+
+    def __init__(self, storage):
+        pass
+
+    def get_features(self):
+        """
+        Fortune Protocol is a read-only protocol that does not require
+        authentication, and really ought not to store any logs.
+        """
+        features = ProtocolFeatures()
+        features.offline = True
+        features.get_updates = True
+        features.no_logging = True
+        return features
+
+    def is_available(self):
+        """
+        Checks availability by attempting to call the fortune command.
+        """
+        try:
+            foo = self.__get_fortune()
+            return True
+        except OSError:
+            return False
+
+    def __get_fortune(self):
+        """
+        Tells your fortune!
+        """
+        return check_output("fortune")
+    

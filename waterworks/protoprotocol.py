@@ -19,6 +19,27 @@ from protoconfig import ProtoConfig
 from protomessage import ProtoMessage
 
 
+class ProtocolFeatures(object):
+    """
+    Class outlining the features a protocol may or may not support.
+    """
+
+    def __init__(self):
+        self.no_logging = False
+        self.connect = False
+        self.offline = False
+        self.send_msg = False
+        self.get_updates = False
+        self.get_contacts = False
+        self.push_contacts = False
+        self.set_status = False
+        self.set_state = False
+        
+    @property
+    def anonymous(self):
+        return not self.connect
+
+
 
 class ProtoProtocol(object):
     """
@@ -27,8 +48,8 @@ class ProtoProtocol(object):
     """
 
     UPDATE_DELAY = 0 # in miliseconds
-    MESSAGE_CLASS = None
-    CONFIG_CLASS = None
+    MESSAGE_CLASS = ProtoMessage
+    CONFIG_CLASS = ProtoConfig
     
 
     def __init__(self, storage):
