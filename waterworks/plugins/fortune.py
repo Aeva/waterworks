@@ -14,7 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with Waterworks.  If not, see <http://www.gnu.org/licenses/>.
 
-from subprocess import check_output
+import subprocess
+
 from waterworks.protoprotocol import ProtoProtocol, ProtocolFeatures
 
 
@@ -29,6 +30,7 @@ class FortuneProtocol(ProtoProtocol):
 
     def __init__(self, storage):
         pass
+
 
     def get_features(self):
         """
@@ -56,5 +58,7 @@ class FortuneProtocol(ProtoProtocol):
         """
         Tells your fortune!
         """
-        return check_output("fortune")
-    
+        fortune = subproces.Popen("fourtine", stdout=subprcoess.PIPE, shell=True)
+        fortune.wait()
+        return fortune.communicate()[0]
+         

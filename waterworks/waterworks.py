@@ -14,7 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with Waterworks.  If not, see <http://www.gnu.org/licenses/>.
 
+import glob
+import imp
+import os
 
+from protoprotocol import ProtoProtocol
 
 class WaterWorks(object):
     def __init__(self):
@@ -22,10 +26,14 @@ class WaterWorks(object):
 
     def get_plugins(self):
         plugin_classes = []
-        for plugin in plugin_classes:
-            # do something
-            pass
+        for plugin in glob.glob(os.path.join("plugins", "*.py")):
+            plugin_name = os.path.split(plugin)[-1][:-3]
+            plugin = imp.load_source(plugin_name, plugin)
+            
+            plugin_attrs = [getattr(plugin, attr) for attr in dir(plugin)]
+            plugin_classes += [attr for attr in plugin_attrs if isinstance(attr, ProtoProtocol)]
 
+        return plugin_classes
 
 def start_daemon(*args):
     client = WaterWorks()

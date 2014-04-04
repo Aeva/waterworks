@@ -85,7 +85,7 @@ class ProtoProtocol(object):
         """
         pass
 
-    def send_msg(self, targets=[], msg):
+    def send_msg(self, msg, targets=None):
         """
         Send a message to the given targets.  The targets are probably
         defined as strings or contacts.  In protocols that support it,
