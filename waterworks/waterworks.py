@@ -17,22 +17,40 @@
 import glob
 import imp
 import os
+import sys
+import traceback
+import plugins
 
 from protoprotocol import ProtoProtocol
 
 class WaterWorks(object):
     def __init__(self):
+        _plugins = self.get_plugins()
+        print "Plugins found:", _plugins
         pass
 
     def get_plugins(self):
         plugin_classes = []
-        for plugin in glob.glob(os.path.join("plugins", "*.py")):
-            plugin_name = os.path.split(plugin)[-1][:-3]
-            plugin = imp.load_source(plugin_name, plugin)
-            
-            plugin_attrs = [getattr(plugin, attr) for attr in dir(plugin)]
-            plugin_classes += [attr for attr in plugin_attrs if isinstance(attr, ProtoProtocol)]
 
+        base_dir = os.path.dirname(plugins.__file__)
+        plugin_paths = glob.glob(os.path.join(base_dir, "*.py"))
+        for path in plugin_paths:
+            plugin_name = os.path.split(path)[-1][:-3]
+            try:
+                plugin = imp.load_source(plugin_name, path)
+            except:
+                print "!!! Failed to load plugin:", path
+                traceback.print_exc()
+                print ""
+                continue
+            plugin_attrs = [getattr(plugin, attr) for attr in dir(plugin)]
+            plugin_classes = []
+            for attr in plugin_attrs:
+                try:
+                    if issubclass(attr, ProtoProtocol) and attr.is_available():
+                        plugin_classes.append(attr)
+                except TypeError:
+                    continue
         return plugin_classes
 
 def start_daemon(*args):
