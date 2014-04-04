@@ -1,0 +1,14 @@
+
+
+--- Basic installation
+
+$ git clone (url)
+$ cd waterworks
+$ sudo python setup.py develop
+
+
+
+--- To run
+
+$ waterworks
+
