@@ -41,6 +41,7 @@ class FortuneProtocol(ProtoProtocol):
         features.no_logging = True
         return features
 
+    @staticmethod
     def is_available(self):
         """
         Checks availability by attempting to call the fortune command.

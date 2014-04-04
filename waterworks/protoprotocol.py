@@ -64,6 +64,7 @@ class ProtoProtocol(object):
         """
         pass
 
+    @staticmethod
     def is_available(self):
         """
         If the protocol is dependent on other programs or libraries on the
